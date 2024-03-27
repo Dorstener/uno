@@ -1,6 +1,13 @@
 let notaEjercicioUno = 0;
 const ejercicioUno = document.getElementById("ejercicioUno");
 
+
+function validacion(userInput) {
+console.log (userInput);
+}
+
+
+
 const respuestasCorrectas =  {
 
         respuestaUno: "Cuándo ",
@@ -19,19 +26,27 @@ const respuestasAceptables = {
     respuestaCinco: ["Por qué", "Por que", "Por que "],
 }
 
+console.log ('Before loop');
+
 for (const inputID in respuestasCorrectas) {
     const input = document.getElementById(inputID);
     const respuesta = input.value;
+    validacion(respuesta);
 
     if (respuesta === respuestasCorrectas[inputID]) {
         notaEjercicioUno += 1
+        
     } else if (respuestasAceptables[inputID].includes(respuesta)) {
         notaEjercicioUno += 0.5;
         
     }
-
+    console.log("Loop iteration:", inputID);
+    console.log("Input element:", input);
+    console.log("User input:", respuesta);
     
 }
+
+
 
 
 /*
