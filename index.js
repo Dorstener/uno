@@ -1,51 +1,69 @@
+/* VARIABLES */
+
 let notaEjercicioUno = 0;
 const ejercicioUno = document.getElementById("ejercicioUno");
+const respuestasCorrectas = {
 
-
-function validacion(userInput) {
-console.log (userInput);
+    respuestaUno: "Cuándo ",
+    respuestaDos: "Cómo ",
+    respuestaTres: "Dónde ",
+    respuestaCuatro: "Qué ",
+    respuestaCinco: "Por qué ",
 }
-
-
-
-const respuestasCorrectas =  {
-
-        respuestaUno: "Cuándo ",
-        respuestaDos: "Cómo ",
-        respuestaTres: "Dónde ",
-        respuestaCuatro: "Qué ",
-        respuestaCinco: "Por qué ",
-    }
-
 const respuestasAceptables = {
 
-    respuestaUno: ["Cuándo", "Cuando ","Cuando"],
+    respuestaUno: ["Cuándo", "Cuando ", "Cuando"],
     respuestaDos: ["Cómo", "Como", "Como "],
     respuestaTres: ["Dónde", "Donde", "Donde "],
     respuestaCuatro: ["Qué", "Que", "Que "],
     respuestaCinco: ["Por qué", "Por que", "Por que "],
 }
 
-console.log ('Before loop');
+/* FUNCTIONS */
 
-for (const inputID in respuestasCorrectas) {
-    const input = document.getElementById(inputID);
-    const respuesta = input.value;
-    validacion(respuesta);
-
-    if (respuesta === respuestasCorrectas[inputID]) {
-        notaEjercicioUno += 1
-        
-    } else if (respuestasAceptables[inputID].includes(respuesta)) {
-        notaEjercicioUno += 0.5;
-        
-    }
-    console.log("Loop iteration:", inputID);
-    console.log("Input element:", input);
-    console.log("User input:", respuesta);
-    
+function validacion(userInput) {
+    console.log(userInput);
 }
 
+function displayFeedback(inputID, feedbackType) {
+    const feedbackElements = {
+        correcto: 'correcto${inputID}',
+        parcial: 'parcial${inputId}',
+        incorrecto: 'incorrecto${inputID}',
+    };
+
+    for (const type in feedbackElements) {
+        const element = document.getElementById(feedbackElements[type]);
+        if (type === feedbackType) {
+            element.classList.remove("hidden");
+        } else {
+            element.classList.add("hidden");
+        }
+    }
+}
+
+document.getElementById("validar").addEventListener('click', function (event) {
+    event.preventDefault();
+
+    for (const inputID in respuestasCorrectas) {
+        const input = document.getElementById(inputID);
+        const respuesta = input.value;
+        validacion(respuesta);
+
+        if (respuesta === respuestasCorrectas[inputID]) {
+            notaEjercicioUno += 1
+            displayFeedback(inputID, "correcto");
+
+        } else if (respuestasAceptables[inputID].includes(respuesta)) {
+            notaEjercicioUno += 0.5;
+            displayFeedback(inputID, "parcial");
+        } else {
+            displayFeedback(inputID, "incorrecto");
+        }
+    }
+
+    console.log("Tu nota final es = " + notaEjercicioUno);
+});
 
 
 
